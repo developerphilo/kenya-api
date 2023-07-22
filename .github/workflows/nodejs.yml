@@ -1,25 +1,26 @@
 name: Kenya API CI
 
-on: [push]
+on: [push] 
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-        strategy:
-            matrix:
-                node-version: [14.x, 16.x, 17.x]
+    strategy:
+      matrix:
+        node-version: [16.x]
 
-        steps:
-            - uses: actions/checkout@v1
-            - name: Use Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v1
-              with:
-                  node-version: ${{ matrix.node-version }}
-            - name: yarn install, build, lint
-              run: |
-                  yarn install
-                  yarn run build
-                  yarn run lint
-              env:
-                  CI: true
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install Dependencies
+        run: yarn install
+      - name: Build and Lint
+        run: |
+          yarn run build
+          yarn run lint
+        env:
+          CI: true
